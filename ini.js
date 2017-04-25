@@ -6,7 +6,7 @@ exports.unsafe = unsafe
 
 var eol = process.platform === 'win32' ? '\r\n' : '\n'
 
-function encode (obj, opt, depth) {
+function encode (obj, opt) {
   var children = []
   var out = ''
 
@@ -14,18 +14,16 @@ function encode (obj, opt, depth) {
     opt = {
       section: opt,
       whitespace: false,
-      indentation: 0
+      indentation: false
     }
   } else {
     opt = opt || {}
     opt.whitespace = opt.whitespace === true
-    opt.indentation = opt.indentation || 0
+    opt.indentation = opt.indentation || false
   }
 
-  depth = depth || 0
-
   var separator = opt.whitespace ? ' = ' : '='
-  var indentation = (new Array((opt.indentation * depth) + 1)).join(' ')
+  var indentation = "\t"
 
   Object.keys(obj).forEach(function (k, _, __) {
     var val = obj[k]
@@ -51,7 +49,7 @@ function encode (obj, opt, depth) {
       section: section,
       whitespace: opt.whitespace,
       indentation: opt.indentation
-    }, depth + 1)
+    })
     if (out.length && child.length) {
       out += eol
     }
