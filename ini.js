@@ -53,7 +53,7 @@ function encode (obj, opt) {
     if (out.length && child.length) {
       out += eol
     }
-    out += indentation + child
+    out += child
   })
 
   return out
